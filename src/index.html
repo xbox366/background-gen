@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../dist/output.css" rel="stylesheet">
+    <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
+
+<body>
+    <div class="w-screen h-auto relative">
+        <div class="flex flex-col justify-center items-center space-y-5 absolute top-7 left-0 right-0 mx-auto">
+            <div name="prewview" class="flex flex-col items-center justify-center space-y-6">
+                <div>My Umemployables</div>
+                <div id="imgPre">
+                    <img src="../imgs/test.png" class="rounded-md">
+                </div>
+                
+            </div>
+            <form action="upload" method="post" enctype="multipart/form-data" class="relative">
+                <div class="p-4 bg-blue-400 rounded-lg font-semibold shadow hover:bg-blue-500 text-center">
+                    Upload one unemployables
+                </div>       
+                <input type="file" name="pic" id="pic" onchange="picUpload();" >
+            </form>
+            <form name="myForm">
+                <input name="inputBar" type="text" placeholder="type in something or not" class=" border border-blue-200 p-3 rounded-lg w-fit">
+            </form>
+            <div>
+                <button id="pcWall"
+                    class="py-3 px-5 mr-3 bg-blue-400 rounded-lg font-semibold shadow hover:bg-blue-500">for
+                    pc</button>
+                <button id="cellPhone" class="py-3 px-5 bg-blue-400 rounded-lg font-semibold shadow hover:bg-blue-500">for
+                    cellphone</button>
+            </div>
+            <div class="absolute -left-510">
+                <div id="workspace-phone" class="bg-neutral-200 w-97.5 h-211 relative">
+                    <div class="absolute top-0 left-0 right-0 bottom-0 m-auto flex flex-col justify-center items-center">
+                        <div id="work-phone">
+                            <img src="../imgs/test.png" class="h-40 w-40">
+                        </div>
+
+                        <div id="genPhoneHere" class="py-3 font-semibold text-center w-2/3 overflow-hidden ">
+                            happy new year
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+            <div class="absolute -left-510">
+                <div id="workspace-pc" class="bg-neutral-200 w-480 h-270 relative">
+                    <div class="absolute top-0 left-0 right-0 bottom-0 m-auto flex flex-col justify-center items-center">
+                        <div id="work-pc">
+                            <img src="../imgs/test.png" class="h-80 w-80">
+                        </div>
+
+                        <div id="genPcHere" class="py-3 font-semibold text-center w-2/3 overflow-hidden ">happy new year!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="result-pc" class="flex flex-col justify-center items-center ">
+
+            </div>
+            <div id="result-phone" class="flex flex-col justify-center items-center ">
+
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        let drawUmPhone = function () {
+                document.getElementById("genPhoneHere").innerText = document.getElementsByName("inputBar")[0].value
+                console.log(document.getElementById("genPhoneHere").innerText)
+            html2canvas(document.getElementById("workspace-phone")).then(canvas => {
+                document.getElementById("result-phone").className = "flex flex-col justify-center items-center";
+                document.getElementById("result-phone").append(canvas)
+                console.log(document.getElementById("result-phone"))
+                console.log(canvas)
+            });
+        }
+        let drawUmPc = function () {
+                document.getElementById("genPcHere").innerText = document.getElementsByName("inputBar")[0].value
+                console.log(document.getElementById("genPcHere").innerText)
+            html2canvas(document.getElementById("workspace-pc")).then(canvas => {
+                document.getElementById("result-pc").className = "flex flex-col justify-center items-center"
+                document.getElementById("result-pc").append(canvas)
+            });
+        }
+        document.getElementById("cellPhone").onclick = function(){
+            document.getElementById("result-pc").className = "hidden"
+            document.getElementById("result-phone").className = "hidden"
+            document.getElementById("result-pc").innerHTML = ""
+            document.getElementById("result-phone").innerHTML = ""
+            drawUmPhone()
+        }
+        document.getElementById("pcWall").onclick = function(){
+            document.getElementById("result-pc").className = "hidden"
+            document.getElementById("result-phone").className = "hidden"
+            document.getElementById("result-pc").innerHTML = ""
+            document.getElementById("result-phone").innerHTML = ""
+            drawUmPc()
+        }
+        function picUpload(){
+            let pic = document.getElementById("pic");//获取input对象
+            let image = pic.value;
+            let extStart = image.lastIndexOf(".");
+	        let ext = image.substring(extStart, image.length).toUpperCase();
+	        if ( ext != ".PNG" && ext != ".GIF" && ext != ".JPG" && ext != ".JPEG") {
+	        alert("only for PNG,JPEG,GIF");
+	        return false;
+	    }
+    	var file = pic.files[0];//获取input上传的图片信息
+    	var url = window.URL.createObjectURL(file);//得到bolb对象路径，赋值给<img>标签的src属性
+
+    	var img = new Image('600','600');
+    	img.src = url;
+
+    	var showMid = document.getElementById("imgPre")
+        var showPc = document.getElementById("work-pc")
+        var showPhone = document.getElementById("work-phone")
+        showMid.innerHTML = "";
+        showMid.appendChild(img);
+        showPc.appendChild(img);
+        showPc.appendChild(img);
+        showPhone.innerHTML = "";
+        showPhone.appendChild(img);
+        console.log(showMid)
+        console.log(showPc)
+        console.log(showPhone)
+        }
+    </script>
+</body>
+
+</html>
